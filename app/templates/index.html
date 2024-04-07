@@ -1,38 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastAPI demo</title>
+{% extends "_base.html" %} 
 
-    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
+{% block content %}
 
-<div class="mx-4">
 
-    <p class="text-2xl font-bold mb-4">Movie List</p>
+<h3 class="text-2xl text-green-800">存塘量评估</h1>
+
+<form id ="calform" hx-post="/calculate/" hx-target="#coeAmount"  >
+
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">平均体重(克):</span>
     
-        <table class="min-w-[50%] mb-4">
-            <thead class="border-b text-lg">
-                <tr>
-                  <th class="border">Film Name</th>
-                  <th class="border">Director</th>
-                </tr>
-              </thead>
-              <tbody class="text-center text-sm" id="table-body">
-                  {% include 'partials/table.html' %}
-              </tbody>
-        </table>
-    
-        <button class="px-3 py-1 bg-blue-600 text-white ml-4"
-                hx-get="/index/"
-                hx-target="#table-body"
-                hx-swap="beforeend">Load More</button>
-            
-</div>
+  </div>
+  <input type="text" id="weightInput"  name="weight" placeholder="平均体重" class="input input-bordered w-full max-w-xs" />
+ 
+</label>
 
-</body>
-</html>
+<select id="weightSelect" name="weight_rang" class="select select-bordered w-full max-w-xs">
+
+  
+  <option value = "-50">小于50克</option>
+  <option value = "50-200">50-200克</option>
+  <option value = "200-500">200-500克</option>
+  <option value = "500-1000">500-1000克</option>
+  <option value = "1000-1500">1000-1500克</option>
+  <option value = "1500-">大于1500克</option>
+
+</select>
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">日均温度(°C):</span>
+    
+  </div>
+  <input type="text" id="temperatureInput" name="temperature" placeholder="日均温度" class="input input-bordered w-full max-w-xs" />
+ 
+</label>
+
+
+<select id="temperatureSelect" name="t_range" class="select select-bordered w-full max-w-xs">
+
+  
+  <option value = "-14">小于-14°C</option>
+  <option value = "14-19">14-19°C</option>
+  <option value = "19-23">19-23°C</option>
+  <option value = "23-28">23-28°C</option>
+  <option value = "28-30">28-30°C</option>
+  <option value = "30-">大于30°C</option>
+
+</select>
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">日投喂饲料(千克):</span>
+    
+  </div>
+
+
+  <input type="text" placeholder="日投喂饲料" class="input input-bordered w-full max-w-xs" />
+ 
+</label>
+
+
+<button type="submit" value="Submit" class="btn ">计算存塘量</button>
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span id ="coeAmount" class="label-text"></span>
+    
+  </div>
+  
+
+</label>
+
+
+
+</form>
+
+
+
+
+
+
+<script >
+  const weight = document.getElementById('weight');
+  const temperature = document.getElementById('temperature');
+
+  weightInput.addEventListener('input', function() {
+      const inputValue = parseInt(weightInput.value);
+      const options = weightSelect.options;
+
+      switch (true) {
+          case inputValue <= 50:
+              weightSelect.value = '-50';
+              break;
+          case inputValue > 50 && inputValue <= 200:
+              weightSelect.value = '50-200';
+              break;
+
+          case inputValue > 200 && inputValue <= 500:
+              weightSelect.value = '200-500';
+              break;
+
+          case inputValue > 500 && inputValue <= 1000:
+              weightSelect.value = '500-1000';
+              break;
+
+          case inputValue > 1000 && inputValue <= 1500:
+              weightSelect.value = '1000-1500';
+              break;
+
+          case inputValue > 1500 :
+              weightSelect.value = '1500-';
+              break;
+          default:
+              // 如果输入值不在范围内，可以选择默认选项或其他处理方式
+              weightSelect.value = '-';
+              break;
+      }
+
+
+  });
+
+  temperatureInput.addEventListener('input', function() {
+      const inputValue = parseInt(temperatureInput.value);
+      const options = temperatureSelect.options;
+
+      switch (true) {
+          case inputValue <= 14:
+              temperatureSelect.value = '-14';
+              break;
+          case inputValue > 14 && inputValue <= 19:
+              temperatureSelect.value = '14-19';
+              break;  
+
+          case inputValue > 19 && inputValue <= 23:
+              temperatureSelect.value = '19-23';
+              break;
+
+          case inputValue > 23 && inputValue <= 28:
+              temperatureSelect.value = '23-28';
+              break;
+
+          case inputValue > 28 && inputValue <= 30:
+              temperatureSelect.value = '28-30';
+              break;
+
+          case inputValue > 30:
+              temperatureSelect.value = '30-';
+              break;
+
+          default:
+              // 如果输入值不在范围内，可以选择默认选项或其他处理方式
+              temperatureSelect.value = '-';
+              break;
+
+      }
+  });
+
+
+</script>
+
+
+
+
+{% endblock  %}

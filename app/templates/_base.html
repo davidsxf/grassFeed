@@ -1,0 +1,70 @@
+<!-- templates/_base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>草鱼池塘养殖量评估系统</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="bg-slate-50 ">
+   
+      <nav
+        class="navbar  relative max-w-[85rem] w-full mx-auto bg-white border-b border-gray-200 py-3 px-4 lg:px-8 xl:border-x"
+        aria-label="Global"
+      >
+  <div class="flex-1">
+    <a class="btn btn-ghost text-xl">草鱼池塘养殖量评估系统</a>
+  </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+      <li><a>Link</a></li>
+      <li>
+        <details>
+          <summary>
+            Parent
+          </summary>
+          <ul class="p-2 bg-base-100 rounded-t-none">
+            <li><a>Link 1</a></li>
+            <li><a>Link 2</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+
+    
+      </nav>
+
+
+    <main id="content" role="main">
+      <div
+        class="max-w-[85rem] mx-auto min-h-screen bg-white border-x-gray-200 py-10 px-4 sm:px-6 lg:px-8 xl:border-x"
+      >
+
+        {% block content %}
+        {% endblock  %}
+     
+      </div>
+    </main>
+
+
+
+<footer class="footer max-w-[85rem] mx-auto bg-white  footer-center p-4  text-base-content border ">
+  <aside>
+    <p>Copyright © 2024 - All right reserved by PRFRI </p>
+  </aside>
+</footer>
+
+  </body>
+
+</html>
