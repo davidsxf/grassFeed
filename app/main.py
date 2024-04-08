@@ -56,7 +56,9 @@ t_range: str, db: Session = Depends(get_db)):
 
         # 假设您的数据模型中有一个 Fish 类和一个 FeedingSchedule 类
         # Fish 类包含鱼的信息，FeedingSchedule 类包含饲料投喂量的信息
+    print(weight_range,t_range)
     feed = db.query(models.Feeds).filter(models.Feeds.weight_range == weight_range, models.Feeds.t_range == t_range).first()
+    print(feed)
     if not feed:
         raise HTTPException(status_code=404, detail="Feeding schedule not found")
         
@@ -88,8 +90,9 @@ async def movielist(request: Request, hx_request: Optional[str] = Header(None)):
     return templates.TemplateResponse("index.html", context)
 
 
-@app.post("/calculate/")
+@app.post("/calculate/",response_class=HTMLResponse)
 async def calculate(weight: float = Form(), temperature: float = Form(), weight_range: str = Form(), t_range: str = Form(), db: Session = Depends(get_db)):
+    print(weight,temperature,weight_range,t_range)
     coe = calculate_feeding_amount(weight, temperature, weight_range, t_range, db)
     amount = coe * 1000
     if coe is None:
