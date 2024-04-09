@@ -12,6 +12,9 @@ import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
+# from logzero import logger
+
+
 app = FastAPI()
 
 
@@ -41,7 +44,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 def calculate_feeding_amount(weight: float, temperature: float, weight_range: str, 
-t_range: str, db: Session = Depends(get_db)):
+t_range: str, db: Session):
     """
     根据鱼的体重和水温计算饲料投喂量
     :param weight: 鱼的体重（单位：克）
@@ -54,11 +57,11 @@ t_range: str, db: Session = Depends(get_db)):
     """
     
 
-        # 假设您的数据模型中有一个 Fish 类和一个 FeedingSchedule 类
-        # Fish 类包含鱼的信息，FeedingSchedule 类包含饲料投喂量的信息
-    print(weight_range,t_range)
+    # 假设您的数据模型中有一个 Fish 类和一个 FeedingSchedule 类
+    # Fish 类包含鱼的信息，FeedingSchedule 类包含饲料投喂量的信息
+
     feed = db.query(models.Feeds).filter(models.Feeds.weight_range == weight_range, models.Feeds.t_range == t_range).first()
-    print(feed)
+    
     if not feed:
         raise HTTPException(status_code=404, detail="Feeding schedule not found")
         
@@ -91,14 +94,20 @@ async def movielist(request: Request, hx_request: Optional[str] = Header(None)):
 
 
 @app.post("/calculate/",response_class=HTMLResponse)
-async def calculate(weight: float = Form(), temperature: float = Form(), weight_range: str = Form(), t_range: str = Form(), db: Session = Depends(get_db)):
-    print(weight,temperature,weight_range,t_range)
-    coe = calculate_feeding_amount(weight, temperature, weight_range, t_range, db)
+async def calculate(request: Request, hx_request: Optional[str] = Header(None),weight: float = Form(...), temperature: float = Form(...),
+weight_range: str = Form(...), t_range: str = Form(...),feeding_amount: float = Form(...), db: Session = Depends(get_db)):
+
+
+    print(weight,temperature,weight_range,t_range,feeding_amount)
+    coe = calculate_feeding_amount(weight, temperature, weight_range, t_range,db)
     amount = coe * 1000
+    context = {"request": request,"amount": amount,"coe":coe}
     if coe is None:
         raise HTTPException(status_code=404, detail="Feeding schedule not found")
-    return {"amount": amount,"coe":coe}
+    if hx_request:
+        return templates.TemplateResponse("partials/result.html", context)
+    return templates.TemplateResponse("index.html", context)
 
 
 # if __name__ == "__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+#     uvicorn.run(app, host="127.0.0.1", port=8001)

@@ -17,7 +17,7 @@
  
 </label>
 
-<select id="weightSelect" name="weight_rang" class="select select-bordered w-full max-w-xs">
+<select id="weightSelect" name="weight_range" class="select select-bordered w-full max-w-xs">
 
   
   <option value = "-50">小于50克</option>
@@ -58,21 +58,14 @@
   </div>
 
 
-  <input type="text" placeholder="日投喂饲料" class="input input-bordered w-full max-w-xs" />
+  <input type="text" placeholder="日投喂饲料" name="feeding_amount" class="input input-bordered w-full max-w-xs" />
  
 </label>
 
 
 <button type="submit" value="Submit" class="btn ">计算存塘量</button>
 
-<label class="form-control w-full max-w-xs">
-  <div class="label">
-    <span id ="coeAmount" class="label-text"></span>
-    
-  </div>
-  
-
-</label>
+{% include 'partials/result.html' %}
 
 
 
