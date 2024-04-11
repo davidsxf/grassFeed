@@ -8,8 +8,10 @@ from fastapi.templating import Jinja2Templates
 
 from pydantic import BaseModel, Field
 
-import models
-from database import engine, SessionLocal
+# import models
+from .models import Base
+
+from .database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
 # from logzero import logger
@@ -34,7 +36,7 @@ class FeedBase(BaseModel):
     fcr: float
 
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 
 def get_db():
