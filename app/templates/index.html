@@ -3,9 +3,11 @@
 {% block content %}
 
 
-<h3 class="text-2xl text-green-800">存塘量评估</h1>
+<h3 class="text-2xl text-green-800">存塘量计算</h1>
 
-<form id ="calform" hx-post="/calculate/" hx-target="#coeAmount"  >
+  
+
+<form id ="calform" hx-post="/calculate/" hx-target="#coeAmount" hx-swap="innerHTML" >
 
 
 <label class="form-control w-full max-w-xs">
@@ -62,8 +64,9 @@
  
 </label>
 
-
+<div class="pt-6">
 <button type="submit" value="Submit" class="btn ">计算存塘量</button>
+</div>
 
 {% include 'partials/result.html' %}
 
@@ -71,7 +74,8 @@
 
 </form>
 
-
+<div class="alert alert-info shadow-lg shadow-lg"> 平均体重规格大于50克，温度不小于14°C
+  </div>
 
 
 

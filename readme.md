@@ -1,7 +1,7 @@
-docker build -t myimage .
+docker build -t feedimage .
 
 
-docker run -d --name mycontainer -p 80:80 myimage
+docker run -d --name feedcontainer -p 80:8018 feedimage
 
 
 ### FastAPI Python framework - Returning HTML templates (with HTMX integration)

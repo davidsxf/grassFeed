@@ -1,0 +1,56 @@
+{% extends "_base.html" %} 
+
+{% block content %}
+
+
+<h3 class="text-2xl text-green-800">AI模型-存塘量评估</h1>
+
+<form id ="predictform" hx-post="/predict/" hx-target="#storage"  >
+
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">规格(斤/尾):</span>
+    
+  </div>
+  <input type="text" id="sizeInput"  name="size" placeholder="平均体重" class="input input-bordered w-full max-w-xs" />
+ 
+</label>
+
+
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">日均温度(°C):</span>
+    
+  </div>
+  <input type="text" id="temperInput" name="temper" placeholder="日均温度" class="input input-bordered w-full max-w-xs" />
+ 
+</label>
+
+
+
+
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">日投喂饲料(千克):</span>
+    
+  </div>
+
+
+  <input type="text" placeholder="日投喂饲料" name="amount" class="input input-bordered w-full max-w-xs" />
+ 
+</label>
+
+
+<div class="pt-6">
+
+<button type="submit" value="Submit" class="btn ">计算月末存塘量</button>
+
+</div>
+
+{% include 'partials/x_result.html' %}
+
+</form>
+
+{% endblock  %}

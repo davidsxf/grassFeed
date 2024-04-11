@@ -5,3 +5,5 @@ uvicorn==0.17.1
 sqlalchemy
 python-multipart
 jinja2
+torch
+numpy
